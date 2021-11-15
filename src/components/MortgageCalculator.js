@@ -8,6 +8,7 @@ const MortgageCalculator = () => {
   const [repaymentTime, setRepaymentTime] = useState(10);
   const [interestRate, setInterestRate] = useState(3);
   const [paymentSummary, setPaymentSummary] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(true);
 
   const principal = purchasePrice - downPayment;
   const rate = interestRate / 100 / 12;
@@ -28,9 +29,16 @@ const MortgageCalculator = () => {
   const totalMortgageCost = (paymentPerMonth() * numberOfPayments).toFixed(2);
   const totalInterestPaid = (totalMortgageCost - principal).toFixed(2);
 
+  const handleChange = (e, setValue) => {
+    setValue(e.target.value);
+
+    if (!principal) {
+      setButtonDisabled(!buttonDisabled);
+    }
+  };
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
-
     setPaymentSummary(true);
   };
 
@@ -56,7 +64,7 @@ const MortgageCalculator = () => {
           <input
             name='purchasePrice'
             defaultValue={purchasePrice}
-            onChange={(e) => setPurchasePrice(e.target.value)}
+            onChange={(e) => handleChange(e, setPurchasePrice)}
             type='range'
             min='0'
             max='1000000'
@@ -76,7 +84,7 @@ const MortgageCalculator = () => {
           <input
             name='downPayment'
             defaultValue={downPayment}
-            onChange={(e) => setDownPayment(e.target.value)}
+            onChange={(e) => handleChange(e, setDownPayment)}
             type='range'
             min='0'
             max='1000000'
@@ -96,7 +104,7 @@ const MortgageCalculator = () => {
           <input
             name='repaymentTime'
             defaultValue={repaymentTime}
-            onChange={(e) => setRepaymentTime(e.target.value)}
+            onChange={(e) => handleChange(e, setRepaymentTime)}
             type='range'
             min='0'
             max='30'
@@ -116,7 +124,7 @@ const MortgageCalculator = () => {
           <input
             name='interestRate'
             defaultValue={interestRate}
-            onChange={(e) => setInterestRate(e.target.value)}
+            onChange={(e) => handleChange(e, setInterestRate)}
             type='range'
             min='1'
             max='15'
@@ -141,7 +149,7 @@ const MortgageCalculator = () => {
             thousandSeparator={true}
           />
         </div>
-        <button>Get A Mortgage Quote</button>
+        <button disabled={buttonDisabled}>Get A Mortgage Quote</button>
       </form>
 
       <div>
