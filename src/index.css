@@ -1,3 +1,91 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  background-color: whitesmoke;
+}
+
+[type='range'] {
+  -webkit-appearance: none;
+  background: transparent;
+  margin: 1rem 0;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 0;
+  box-shadow: 2px 2px 12px rgb(230, 230, 230, 0.5);
+}
+
+[type='range']::-moz-focus-outer {
+  border: 0;
+}
+
+[type='range']::-webkit-slider-runnable-track {
+  -webkit-appearance: none;
+  height: 1em;
+  margin-left: 10px;
+  border: none;
+  background-color: rgb(255, 255, 255);
+  transition: all 0.2s ease;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  width: 1rem;
+  height: 1rem;
+  background-color: rgb(0, 95, 63);
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  box-shadow: -100vw 2px 0px 100vw rgba(16, 185, 129, 1);
+  cursor: ew-resize;
+}
+
+[type='range']::-moz-range-track {
+  cursor: default;
+  height: 1em;
+  margin-left: 10px;
+  border: none;
+  background-color: rgb(255, 255, 255);
+  transition: all 0.2s ease;
+}
+[type='range']::-moz-range-thumb {
+  width: 1rem;
+  height: 1rem;
+  background-color: rgb(0, 95, 63);
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  box-shadow: -100vw 2px 0px 100vw rgba(16, 185, 129, 1);
+  cursor: ew-resize;
+}
+[type='range']::-ms-track {
+  cursor: default;
+  height: 1em;
+  margin-left: 10px;
+  border: none;
+  background-color: rgb(255, 255, 255);
+  transition: all 0.2s ease;
+}
+[type='range']::-ms-fill-lower {
+  background: rgb(255, 255, 255);
+  border: none;
+}
+[type='range']::-ms-fill-upper {
+  background: rgb(255, 255, 255);
+  border: none;
+}
+[type='range']::-ms-thumb {
+  width: 1rem;
+  height: 1rem;
+  background-color: rgb(0, 95, 63);
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  box-shadow: -100vw 2px 0px 100vw rgba(16, 185, 129, 1);
+  cursor: ew-resize;
+}
+[type='range']:disabled::-webkit-slider-thumb,
+[type='range']:disabled::-moz-range-thumb,
+[type='range']:disabled::-ms-thumb,
+[type='range']:disabled::-webkit-slider-runnable-track,
+[type='range']:disabled::-ms-fill-lower,
+[type='range']:disabled::-ms-fill-upper {
+  cursor: not-allowed;
+}

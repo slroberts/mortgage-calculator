@@ -5,8 +5,8 @@ import PaymentSummary from './PaymentSummary';
 const MortgageCalculator = () => {
   const [purchasePrice, setPurchasePrice] = useState(0);
   const [downPayment, setDownPayment] = useState(0);
-  const [repaymentTime, setRepaymentTime] = useState(10);
-  const [interestRate, setInterestRate] = useState(3);
+  const [repaymentTime, setRepaymentTime] = useState(15);
+  const [interestRate, setInterestRate] = useState(2.5);
   const [paymentSummary, setPaymentSummary] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
@@ -24,16 +24,16 @@ const MortgageCalculator = () => {
   };
 
   const monthlyPayment = paymentPerMonth();
-  const biweeklyPayment = (paymentPerMonth() / 2).toFixed(2);
+  const biweeklyPayment = (monthlyPayment / 2).toFixed(2);
   const downPaymentPercent = Math.round((downPayment / purchasePrice) * 100);
-  const totalMortgageCost = (paymentPerMonth() * numberOfPayments).toFixed(2);
+  const totalMortgageCost = (monthlyPayment * numberOfPayments).toFixed(2);
   const totalInterestPaid = (totalMortgageCost - principal).toFixed(2);
 
   const handleChange = (e, setValue) => {
     setValue(e.target.value);
 
-    if (!principal) {
-      setButtonDisabled(!buttonDisabled);
+    if (principal > 0) {
+      setButtonDisabled(false);
     }
   };
 
@@ -45,23 +45,23 @@ const MortgageCalculator = () => {
   return (
     <div>
       <form
+        className='flex flex-wrap justify-between'
         onSubmit={handleFormSubmit}
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-        }}
       >
-        <div>
+        <div className='w-full my-4 px-4 lg:w-2/6 md:w-3/6 md:my-8'>
           <div>
             Purchase price:
-            <NumberFormat
-              prefix={' $'}
-              value={purchasePrice}
-              displayType={'text'}
-              thousandSeparator={true}
-            />
+            <span className='text-lg font-bold'>
+              <NumberFormat
+                prefix={' $'}
+                value={purchasePrice}
+                displayType={'text'}
+                thousandSeparator={true}
+              />
+            </span>
           </div>
           <input
+            className='w-full'
             name='purchasePrice'
             defaultValue={purchasePrice}
             onChange={(e) => handleChange(e, setPurchasePrice)}
@@ -71,17 +71,20 @@ const MortgageCalculator = () => {
             step='100'
           />
         </div>
-        <div>
+        <div className='w-full my-4 px-4 lg:w-2/6 md:w-3/6 md:my-8'>
           <div>
             Down payment:
-            <NumberFormat
-              prefix={' $'}
-              value={downPayment}
-              displayType={'text'}
-              thousandSeparator={true}
-            />
+            <span className='text-lg font-bold'>
+              <NumberFormat
+                prefix={' $'}
+                value={downPayment}
+                displayType={'text'}
+                thousandSeparator={true}
+              />
+            </span>
           </div>
           <input
+            className='w-full'
             name='downPayment'
             defaultValue={downPayment}
             onChange={(e) => handleChange(e, setDownPayment)}
@@ -91,37 +94,43 @@ const MortgageCalculator = () => {
             step='100'
           />
         </div>
-        <div>
+        <div className='w-full my-4 px-4 lg:w-2/6 md:w-3/6 md:my-8'>
           <div>
             Repayment time:{' '}
-            <NumberFormat
-              suffix={repaymentTime > 1 ? ' years' : ' year'}
-              value={repaymentTime}
-              displayType={'text'}
-              thousandSeparator={false}
-            />
+            <span className='text-lg font-bold'>
+              <NumberFormat
+                suffix={repaymentTime > 1 ? ' years' : ' year'}
+                value={repaymentTime}
+                displayType={'text'}
+                thousandSeparator={false}
+              />
+            </span>
           </div>
           <input
+            className='w-full'
             name='repaymentTime'
             defaultValue={repaymentTime}
             onChange={(e) => handleChange(e, setRepaymentTime)}
             type='range'
-            min='0'
+            min='5'
             max='30'
             step='5'
           />
         </div>
-        <div>
+        <div className='w-full my-4 px-4 lg:w-2/6 md:w-3/6 md:my-8'>
           <div>
             Interest rate:{' '}
-            <NumberFormat
-              suffix={'%'}
-              value={interestRate}
-              displayType={'text'}
-              thousandSeparator={true}
-            />
+            <span className='text-lg font-bold'>
+              <NumberFormat
+                suffix={'%'}
+                value={interestRate}
+                displayType={'text'}
+                thousandSeparator={true}
+              />
+            </span>
           </div>
           <input
+            className='w-full'
             name='interestRate'
             defaultValue={interestRate}
             onChange={(e) => handleChange(e, setInterestRate)}
@@ -131,27 +140,47 @@ const MortgageCalculator = () => {
             step='.1'
           />
         </div>
-        <div>
-          Loan amount
-          <NumberFormat
-            prefix={' $'}
-            value={principal}
-            displayType={'text'}
-            thousandSeparator={true}
-          />
+        <div className='w-full my-4 px-4 lg:w-2/6 md:w-3/6 md:my-8'>
+          Loan amount:
+          <div className='text-2xl font-extrabold'>
+            <NumberFormat
+              prefix={' $'}
+              value={principal}
+              displayType={'text'}
+              thousandSeparator={true}
+            />
+          </div>
         </div>
-        <div>
+        <div className='w-full my-4 px-4 lg:w-2/6 md:w-3/6 md:my-8'>
           Estimated per month:
-          <NumberFormat
-            prefix={' $'}
-            value={monthlyPayment}
-            displayType={'text'}
-            thousandSeparator={true}
-          />
+          <div className='text-2xl font-extrabold'>
+            <NumberFormat
+              prefix={' $'}
+              value={monthlyPayment}
+              displayType={'text'}
+              thousandSeparator={true}
+            />
+          </div>
         </div>
-        <button disabled={buttonDisabled}>Get A Mortgage Quote</button>
+        <div className='w-full mt-4 px-4 md:mt-12 md:w-96'>
+          <button
+            disabled={buttonDisabled}
+            className={`
+              w-full
+              text-white
+              p-4
+              rounded
+              
+              ${
+                buttonDisabled
+                  ? 'bg-gray-500 cursor-default'
+                  : 'bg-green-500 hover:bg-green-800 hover:shadow-md'
+              }`}
+          >
+            Get A Mortgage Quote
+          </button>
+        </div>
       </form>
-
       <div>
         {paymentSummary ? (
           <PaymentSummary
